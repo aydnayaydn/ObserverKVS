@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    build: 
+      context: ..
+      dockerfile: Dockerfile
+    command: sleep infinity
+    volumes:
+      - ..:/workspace:cached
+    depends_on:
+      - db
+    networks:
+      - observerkvs-dev-network
+    ports:
+      - "4400:3000"
+
+  db:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - observerkvs-dev-network
+    ports:
+      - "27000:27017"
+
+networks:
+  observerkvs-dev-network:
+
+volumes:
+  mongo-data:
